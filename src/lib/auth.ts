@@ -30,14 +30,14 @@ export const {
     }
   },
   callbacks: {
-    async signIn({ account }) {
+    async signIn({ account, user }) {
       // Allow OAuth without email verification
       if (account?.provider !== 'credentials') return true
 
-      // const existingUser = await getUserById(String(user.id))
+      const existingUser = await getUserById(String(user.id))
 
       // Prevent sign in without email verification
-      // if (!existingUser?.emailVerified) return false
+      if (!existingUser?.emailVerified) return false
 
       return true
     },

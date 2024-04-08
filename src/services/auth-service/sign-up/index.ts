@@ -5,6 +5,9 @@ import { hash } from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { action } from '@/lib/action-handler'
 
+import { generateVerificationToken } from '@/services/verification-token/generate-verification-token'
+import { sendVerificationEmail } from '@/services/mail-service/send-verification-token'
+
 import { signUpSchema } from './schema'
 
 export const signUp = action({
@@ -19,7 +22,7 @@ export const signUp = action({
 
     if (userExists) {
       return {
-        error: 'Usuário já cadastrado na plataforma'
+        error: 'Usuário já cadastrado na plataforma!'
       }
     }
 
@@ -30,6 +33,12 @@ export const signUp = action({
         name: input.name
       }
     })
+
+    const verificationToken = await generateVerificationToken(input.email)
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token
+    )
 
     return { data: user }
   }

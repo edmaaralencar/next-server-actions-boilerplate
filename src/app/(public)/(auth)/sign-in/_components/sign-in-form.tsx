@@ -74,7 +74,7 @@ export function SignInForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Senh</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="******" type="password" />
                 </FormControl>
@@ -83,7 +83,7 @@ export function SignInForm() {
             )}
           />
           <Button isLoading={isPending} type="submit" className="w-full">
-            Entre
+            Entrar
           </Button>
         </form>
       </Form>

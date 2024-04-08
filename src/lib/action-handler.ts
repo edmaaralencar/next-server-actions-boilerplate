@@ -78,6 +78,6 @@ export const action = <TInput, TOutput>({
       })
     }
 
-    return handler({ input: validationResult.data })
+    return handler({ input: validationResult.data, context })
   }
 }

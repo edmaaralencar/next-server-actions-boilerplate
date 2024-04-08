@@ -1,9 +1,10 @@
+import Link from 'next/link'
+
 import { Button } from '@/components/ui/button'
 
-import Link from 'next/link'
-import { SignUpForm } from './_components/sign-up-form'
+import { SignInForm } from './_components/sign-in-form'
 
-export default function SignUp() {
+export default function SignIn() {
   return (
     <div className="flex flex-col gap-4">
       <Button asChild>
@@ -12,15 +13,13 @@ export default function SignUp() {
         </Link>
       </Button>
       <div className="space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Cadastre-se agora
-        </h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Entre agora</h1>
         <p className="text-sm text-muted-foreground">
-          Escreva suas credenciais para criar sua conta!
+          Escreva suas credenciais para fazer entrar!
         </p>
       </div>
 
-      <SignUpForm />
+      <SignInForm />
     </div>
   )
 }

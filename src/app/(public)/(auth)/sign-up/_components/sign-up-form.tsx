@@ -29,13 +29,14 @@ export function SignUpForm() {
   const { onSubmit, isPending, form } = useActionForm({
     schema: signUpSchema,
     action: signUp,
-    onSuccess: () => {
+    onSuccess: ({ input }) => {
       toast.success('Conta criada com sucesso!', {
-        description: 'Você será redirecionado para a tela de login'
+        description:
+          'Você será redirecionado para a tela de verificação do código!'
       })
 
       setTimeout(() => {
-        router.push('/sign-in')
+        router.push(`/verification-token?email=${input.email}`)
       }, 600)
     },
     onError: error => {
@@ -95,7 +96,7 @@ export function SignUpForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Senha</FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="******" type="password" />
                 </FormControl>
@@ -104,7 +105,7 @@ export function SignUpForm() {
             )}
           />
           <Button isLoading={isPending} type="submit" className="w-full">
-            Entre
+            Cadastar
           </Button>
         </form>
       </Form>

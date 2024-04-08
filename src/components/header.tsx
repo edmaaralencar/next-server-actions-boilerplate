@@ -5,8 +5,8 @@ export async function Header() {
   const user = await currentUser()
 
   return (
-    <header className="border-b h-16 px-4 flex justify-between items-center">
-      <h1>Logo</h1>
+    <header className="border-b border-muted h-24 px-8 flex justify-between items-center">
+      <h1 className="text-3xl">Logo</h1>
 
       <UserMenu name={user?.name} email={user?.email} />
     </header>

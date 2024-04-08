@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 type ActionInput<T extends ZodObject<any, any, any, any>> = {
   schema: T
   action: (input: z.infer<T>, context?: Record<string, any>) => Promise<any>
-  onSuccess: () => void
+  onSuccess: (data: { input: z.infer<T> }) => void
   onError: (error: string) => void
   defaultValues: z.infer<T>
   context?: Record<string, any>
@@ -37,7 +37,7 @@ export const useActionForm = <T extends ZodObject<any, any, any, any>>({
       action(formData, context).then(response => {
         if (response?.error) {
           if (response.error === 'Unauthorized') {
-            router.push('/login')
+            router.push('/sign-in')
             return
           }
 
@@ -46,7 +46,7 @@ export const useActionForm = <T extends ZodObject<any, any, any, any>>({
         }
 
         if (response?.data) {
-          onSuccess()
+          onSuccess({ input: formData })
         }
       })
     })

@@ -7,6 +7,8 @@ import { DEFAULT_LOGIN_REDIRECT } from '@/config/routes.config'
 import { getUserByEmail } from '../get-user-by-email'
 import { AuthError } from 'next-auth'
 import { signIn as signInNextAuth } from '@/lib/auth'
+import { generateVerificationToken } from '@/services/verification-token/generate-verification-token'
+import { sendVerificationEmail } from '@/services/mail-service/send-verification-token'
 
 export const signIn = action({
   schema: signInSchema,
@@ -16,6 +18,19 @@ export const signIn = action({
 
     if (!existingUser || !existingUser.email || !existingUser.password) {
       return { error: 'Credenciais inválidas!' }
+    }
+
+    if (!existingUser.emailVerified) {
+      const verificationToken = await generateVerificationToken(
+        existingUser.email
+      )
+
+      await sendVerificationEmail(
+        verificationToken.email,
+        verificationToken.token
+      )
+
+      return { error: 'Você ainda não confirmou o e-mail.' }
     }
 
     try {
